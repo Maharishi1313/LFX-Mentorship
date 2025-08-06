@@ -34,7 +34,7 @@ async def clear_stack(length, stack, dut, i, f):
 
 async def push_to_stack(data_width, length, stack, dut, i, f):
     push_val = randint(0, 2 ** (data_width if data_width < 32 else 25) - 1)
-    inst = Bits(b32 = f'{push_val:025b}0100111')
+    inst = Bits(bin = f'{push_val:025b}0100111')
     dut.io_in.value = inst.u
     dut.reset.value = 0
     await Timer(1, units = 'ns')
@@ -60,7 +60,7 @@ async def push_to_stack(data_width, length, stack, dut, i, f):
 
 async def pop_from_stack(data_width, length, stack, dut, i, f):
     pop_val = 0
-    inst = Bits(b32 = f'{"0" * 25}1000011')
+    inst = Bits(bin = f'{"0" * 25}1000011')
     dut.io_in.value = inst.u
     dut.reset.value = 0
     await Timer(1, units = 'ns')
@@ -87,7 +87,7 @@ async def pop_from_stack(data_width, length, stack, dut, i, f):
 
 async def peek_at_stack(data_width, length, stack, dut, i, f):
     peek_val = 0
-    inst = Bits(b32 = f'{"0" * 25}1{"0" * 6}')
+    inst = Bits(bin = f'{"0" * 25}1{"0" * 6}')
     dut.io_in.value = inst.u
     dut.reset.value = 0
     await Timer(1, units = 'ns')
