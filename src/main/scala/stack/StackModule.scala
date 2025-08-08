@@ -7,12 +7,6 @@ import chisel3.experimental.ChiselEnum
 import java.nio.file.Paths
 
 
-object stack_stt {
-  object State extends ChiselEnum {
-    val laddr_emp, laddr_fill, start = Value
-  }
-}
-
 // Your code starts here
 class StackModule(dataWidth: Int = 16, len:Int = 1024) extends Module {
   val io = IO(new Bundle{
@@ -37,11 +31,11 @@ class StackModule(dataWidth: Int = 16, len:Int = 1024) extends Module {
   val doPop   = opcode === POP
   val doPeek  = opcode === PEEK
 
-  // Stack storage and stack pointer (sp == current size, range 0..len)
+  // Stack and stack pointer initialization
   val mem = Reg(Vec(len, UInt(dataWidth.W)))
   val sp  = RegInit(0.U(log2Ceil(len + 1).W))
 
-  // Decode and zero-extend/truncate immediate (bits 31:7, 25 bits)
+  // Decoding immediate
   val imm25 = io.in(31, 7)
   val pushData = Wire(UInt(dataWidth.W))
   if (dataWidth >= 25) {
@@ -57,7 +51,7 @@ class StackModule(dataWidth: Int = 16, len:Int = 1024) extends Module {
   val poppedReg     = RegInit(0.U(1.W))
   val peekedReg     = RegInit(0.U(1.W))
 
-  // Defaults values each cycle
+  // Default values 
   underflowReg := 0.U
   overflowReg  := 0.U
   poppedReg    := 0.U
