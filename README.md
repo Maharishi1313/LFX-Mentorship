@@ -15,7 +15,7 @@ The `StackModule` is the name of the hardware stack to be implemented. This main
 
 #### Inputs
 
-- **io.in:** A `dataWidth` wide input port. Used to input instructions.
+- **io.in:** A 32-bit wide input port. Used to input instructions.
 
 #### Outputs
 
